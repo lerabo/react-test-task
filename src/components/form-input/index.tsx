@@ -1,21 +1,23 @@
 import React from 'react'
 import { Field, Form } from 'react-final-form'
-import { IItem } from '../../types/items.types'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { setItems } from '../../store/slices'
 import './index.css'
 
-interface IProps {
-	items: IItem[] | null
-	setItems: React.Dispatch<React.SetStateAction<IItem[] | null>>
-}
+export const ItemInput: React.FC = () => {
+	const items = useSelector((state: RootState) => state.items.items)
+	const dispatch: AppDispatch = useDispatch()
 
-export const ItemInput: React.FC<IProps> = ({ setItems }) => {
 	const onSubmit = ({ item }: { item: string }) => {
 		const randomNumber = Math.floor(Math.random() * 100000000)
 
-		setItems((prev) =>
-			prev !== null
-				? [...prev, { label: item, id: randomNumber }]
-				: [{ label: item, id: randomNumber }]
+		dispatch(
+			setItems(
+				items !== null
+					? [...items, { label: item, id: randomNumber }]
+					: [{ label: item, id: randomNumber }]
+			)
 		)
 	}
 

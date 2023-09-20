@@ -1,12 +1,11 @@
 import React from 'react'
-import { IItem } from '../../types/items.types'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 import './index.css'
 
-interface IProps {
-	activeItem: IItem | null
-}
+export const CommentsList: React.FC = () => {
+	const activeItem = useSelector((state: RootState) => state.items.activeItem)
 
-export const CommentsList: React.FC<IProps> = ({ activeItem }) => {
 	return (
 		<ul className="items-ul">
 			{activeItem?.comments &&

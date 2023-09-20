@@ -1,19 +1,15 @@
 import React from 'react'
 import { Field, Form } from 'react-final-form'
-import { IItem } from '../../types/items.types'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { setItems } from '../../store/slices'
 import './index.css'
 
-interface IProps {
-	activeItem: IItem | null
-	items: IItem[] | null
-	setItems: React.Dispatch<React.SetStateAction<IItem[] | null>>
-}
+export const ColorInput: React.FC = () => {
+	const items = useSelector((state: RootState) => state.items.items)
+	const activeItem = useSelector((state: RootState) => state.items.activeItem)
+	const dispatch: AppDispatch = useDispatch()
 
-export const ColorInput: React.FC<IProps> = ({
-	activeItem,
-	items,
-	setItems,
-}) => {
 	const onSubmit = (values: { color: string; text: string }) => {
 		const updatedItems =
 			items !== null
@@ -31,7 +27,7 @@ export const ColorInput: React.FC<IProps> = ({
 				  })
 				: items
 
-		setItems(updatedItems)
+		dispatch(setItems(updatedItems))
 	}
 
 	return (

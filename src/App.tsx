@@ -1,22 +1,21 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { CommentsList, ItemInput, ColorInput, ItemsList } from './components'
-import { IItem } from './types/items.types'
+import { AppDispatch, RootState } from './store'
+import { setActiveItem } from './store/slices'
 import './App.css'
 
 function App() {
-	const [items, setItems] = React.useState<IItem[] | null>([
-		{ label: 'test', id: Math.floor(Math.random() * 100000000) },
-	])
-	const [activeItem, setActiveItem] = React.useState<IItem | null>(
-		items ? items[0] : null
-	)
+	const items = useSelector((state: RootState) => state.items.items)
+	const activeItem = useSelector((state: RootState) => state.items.activeItem)
+	const dispatch: AppDispatch = useDispatch()
 
 	React.useEffect(() => {
 		if (items?.findIndex((el) => el.id === activeItem?.id) === -1) {
-			setActiveItem(items[0])
+			dispatch(setActiveItem(items[0]))
 		}
 		const updatedItem = items?.find((el) => el.id === activeItem?.id)
-		updatedItem && setActiveItem(updatedItem)
+		updatedItem && dispatch(setActiveItem(updatedItem))
 	}, [items, activeItem])
 
 	return (
@@ -29,22 +28,13 @@ function App() {
 				<main className="main-container">
 					<div className="item-block">
 						<h1 className="items-title">Items</h1>
-						<ItemInput items={items} setItems={setItems} />
-						<ItemsList
-							items={items}
-							setItems={setItems}
-							activeItem={activeItem}
-							setActiveItem={setActiveItem}
-						/>
+						<ItemInput />
+						<ItemsList />
 					</div>
 					<div className="item-block">
 						<h1 className="items-title">Comments #{activeItem?.id}</h1>
-						<CommentsList activeItem={activeItem} />
-						<ColorInput
-							items={items}
-							setItems={setItems}
-							activeItem={activeItem}
-						/>
+						<CommentsList />
+						<ColorInput />
 					</div>
 				</main>
 			</div>

@@ -1,26 +1,21 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../store'
+import { setActiveItem, setItems } from '../../store/slices'
 import { IItem } from '../../types/items.types'
 import './index.css'
 
-interface IProps {
-	items: IItem[] | null
-	setItems: React.Dispatch<React.SetStateAction<IItem[] | null>>
-	activeItem: IItem | null
-	setActiveItem: React.Dispatch<React.SetStateAction<IItem | null>>
-}
+export const ItemsList: React.FC = () => {
+	const items = useSelector((state: RootState) => state.items.items)
+	const activeItem = useSelector((state: RootState) => state.items.activeItem)
+	const dispatch: AppDispatch = useDispatch()
 
-export const ItemsList: React.FC<IProps> = ({
-	items,
-	setItems,
-	activeItem,
-	setActiveItem,
-}) => {
 	const deleteHandler = (id: number) => () => {
-		items !== null && setItems(items?.filter((el) => el.id !== id))
+		items !== null && dispatch(setItems(items?.filter((el) => el.id !== id)))
 	}
 
 	const changeHandler = (item: IItem) => () => {
-		setActiveItem(item)
+		dispatch(setActiveItem(item))
 	}
 
 	return (
