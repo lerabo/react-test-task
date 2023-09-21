@@ -25,18 +25,20 @@ function App() {
           <h2 className="aside-h2">DAIRY APP</h2>
           <div className="aside-div">Comment with no sense</div>
         </aside>
-        <main className="main-container">
-          <div className="item-block">
-            <h1 className="items-title">Items</h1>
-            <ItemInput />
-            <ItemsList />
-          </div>
-          <div className="item-block">
-            <h1 className="items-title">Comments #{activeItem?.id}</h1>
-            <CommentsList />
-            <ColorInput />
-          </div>
-        </main>
+        <div className="main-container">
+          <main className="container">
+            <div className="item-block">
+              <h1 className="items-title">Items</h1>
+              <ItemInput />
+              <ItemsList />
+            </div>
+            <div className="item-block">
+              <h1 className="items-title">Comments #{activeItem?.id}</h1>
+              <CommentsList />
+              <ColorInput />
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   )
