@@ -6,20 +6,20 @@ import { itemsSlice } from './slices'
 export type AppDispatch = typeof store.dispatch
 
 const persistConfig = {
-	key: 'root',
-	storage,
+  key: 'root',
+  storage,
 }
 
 const persistedItemsReducer = persistReducer(persistConfig, itemsSlice.reducer)
 
 export const store = configureStore({
-	reducer: {
-		items: persistedItemsReducer,
-	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			serializableCheck: false,
-		}),
+  reducer: {
+    items: persistedItemsReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 })
 
 export const persistor = persistStore(store)
